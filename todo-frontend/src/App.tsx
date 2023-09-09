@@ -30,7 +30,7 @@ export const App = () => {
     }
 
     async function asyncPush() {
-        const apiEndpoint = "/api/push-todos";
+        const apiEndpoint = "/api/push-todo";
         const todo: Todo = {
             todoid: Number(todoid),
             todoheader: todoheader,
@@ -47,6 +47,7 @@ export const App = () => {
             });
 
             console.log(await response.json());
+            
         } catch (err) {
             throw new Error("Error in fetch");
         }
@@ -54,6 +55,22 @@ export const App = () => {
         setTodoid("");
         setTodoheader("");
         setTodoinfo("");
+    }
+
+    async function asyncUpdate() {
+        const apiEndpoint = `/api/update-todo/${todoid}`;
+        const todo: Todo = {
+            todoid: Number(todoid),
+            todoheader: todoheader,
+            todoinfo: todoinfo
+        }
+
+        const response = await fetch("http://localhost:8080" + apiEndpoint, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+        });
     }
 
     return(
@@ -95,6 +112,12 @@ export const App = () => {
                     onClick={asyncPush}
                 >
                     Push todo
+                </button>
+                <button
+                    className="text-3xl mt-5 h-14 w-56 rounded-xl bg-white text-purple-500 hover:bg-purple-500 hover:text-white font-serif hover:border-2 hover:border-white"
+                    onClick={asyncUpdate}
+                >
+                    Update todo
                 </button>
             </div>
 
