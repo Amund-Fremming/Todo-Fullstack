@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import todobackend.todo.model.Todo;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,13 +37,22 @@ public class TodoController {
     @PutMapping("/update-todo/{id}")
     public ResponseEntity<String> updateTodoData(@PathVariable int id, @RequestBody Todo updatedTodo) {
         System.out.println(id);
-        todos.stream().forEach(todo -> {
-            if(todo != null && todo.getTodoid() == id)
-                todos.remove(todo);
-        });
+
+        // Create an iterator for safe removal
+        Iterator<Todo> iterator = todos.iterator();
+
+        while (iterator.hasNext()) {
+            Todo todo = iterator.next();
+            if (todo != null && todo.getTodoid() == id) {
+                iterator.remove(); // Safely remove the matching todo
+            }
+        }
+
         todos.add(updatedTodo);
+
         return ResponseEntity.ok("TODO Updated successfully");
     }
+
 
     @ResponseBody
     @DeleteMapping("/delete-todo/{id}")
