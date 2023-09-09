@@ -65,7 +65,7 @@ export const App = () => {
             todoinfo: todoinfo
         }
 
-        const response = await fetch("http://localhost:8080" + apiEndpoint, {
+        /*const response = */await fetch("http://localhost:8080" + apiEndpoint, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json"
@@ -73,7 +73,7 @@ export const App = () => {
             body: JSON.stringify(todo)
         });
 
-        console.log(await response.text());
+        // console.log(await response.text());
     }
 
     return(
