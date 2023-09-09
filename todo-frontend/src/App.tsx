@@ -46,7 +46,7 @@ export const App = () => {
                 body: JSON.stringify(todo)
             });
 
-            console.log(await response.json());
+            console.log(await response.text());
             
         } catch (err) {
             throw new Error("Error in fetch");
@@ -66,11 +66,14 @@ export const App = () => {
         }
 
         const response = await fetch("http://localhost:8080" + apiEndpoint, {
-            method: "POST",
+            method: "PUT",
             headers: {
                 "Content-Type": "application/json"
             },
+            body: JSON.stringify(todo)
         });
+
+        console.log(await response.text());
     }
 
     return(
