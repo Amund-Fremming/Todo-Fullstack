@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 interface Todo {
     todoid: number
@@ -9,6 +9,9 @@ interface Todo {
 export const App = () => {
 
     const [todos, setTodos] = useState<Todo[]>([]);
+    const [todoid, setTodoid] = useState<string>("");
+    const [todoheader, setTodoheader] = useState<string>("");
+    const [todoinfo, setTodoinfo] = useState<string>("");
 
     async function asyncFetch() {
         const apiEndpoint = "/api/fetch-todos";
@@ -26,6 +29,33 @@ export const App = () => {
         }
     }
 
+    async function asyncPush() {
+        const apiEndpoint = "/api/push-todos";
+        const todo: Todo = {
+            todoid: Number(todoid),
+            todoheader: todoheader,
+            todoinfo: todoinfo
+        }
+
+        try {
+            const response = await fetch("http://localhost:8080" + apiEndpoint, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(todo)
+            });
+
+            console.log(await response.json());
+        } catch (err) {
+            throw new Error("Error in fetch");
+        }
+
+        setTodoid("");
+        setTodoheader("");
+        setTodoinfo("");
+    }
+
     return(
         <div className="flex flex-col bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-400 justify-center items-center h-screen w-full">
             <h1 className="font-serif text-8xl font bold text-center text-white hover:-translate-y-10 transition-all duration-500">Hello Bitches!</h1>
@@ -40,6 +70,34 @@ export const App = () => {
                     <li key={todo.todoid} className="text-2xl m-1 list-disc font-serif text-white">{todo.todoinfo}</li>
                 ))}
             </div>
+
+            <div className="flex flex-col justify-center items-center">
+                <input
+                    placeholder="todo id" 
+                    value={todoid}
+                    onChange={e => setTodoid(e.target.value)}
+                    className="m-1 text-xl h-12 w-48 mt-2 rounded-xl bg-white text-purple-500 hover:bg-purple-500 hover:text-white font-serif hover:border-2 hover:border-white text-center"
+                />
+                <input
+                    placeholder="todo header"
+                    value={todoheader}
+                    onChange={e => setTodoheader(e.target.value)}
+                    className="m-1 text-xl h-12 w-48 mt-2 rounded-xl bg-white text-purple-500 hover:bg-purple-500 hover:text-white font-serif hover:border-2 hover:border-white text-center"
+                />
+                <input
+                    placeholder="todo info"
+                    value={todoinfo}
+                    onChange={e => setTodoinfo(e.target.value)}
+                    className="m-1 text-xl h-12 w-48 mt-2 rounded-xl bg-white text-purple-500 hover:bg-purple-500 hover:text-white font-serif hover:border-2 hover:border-white text-center"
+                />
+                <button
+                    className="text-3xl mt-5 h-14 w-56 rounded-xl bg-white text-purple-500 hover:bg-purple-500 hover:text-white font-serif hover:border-2 hover:border-white"
+                    onClick={asyncPush}
+                >
+                    Push todo
+                </button>
+            </div>
+
         </div>
     )
 }
