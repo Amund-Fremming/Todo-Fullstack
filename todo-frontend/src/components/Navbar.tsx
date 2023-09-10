@@ -10,7 +10,7 @@ export default function Navbar() {
   }
 
   return (
-    <div className="bg-blue-500 p-4">
+    <div className="bg-blue-500 p-4 border-b-2 border-black">
       <div className="container mx-auto">
         <div className="flex justify-between items-center">
           <div className="text-white font-serif text-2xl font-semibold">logo</div>
