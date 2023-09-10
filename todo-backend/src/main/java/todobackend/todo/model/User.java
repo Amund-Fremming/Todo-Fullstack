@@ -1,5 +1,7 @@
 package todobackend.todo.model;
 
+import java.util.List;
+
 public class User {
 
     private int userid;
@@ -7,11 +9,14 @@ public class User {
     private String password;
     private String passwordsalt;
 
-    public User(int userid, String username, String password, String passwordsalt) {
+    private List<Todo> todos;
+
+    public User(int userid, String username, String password, String passwordsalt, List<Todo> todos) {
         this.userid = userid;
         this.username = username;
         this.password = password;
         this.passwordsalt = passwordsalt;
+        this.todos = todos;
     }
 
     public int getUserid() {
@@ -45,5 +50,12 @@ public class User {
     public void setPasswordsalt(String passwordsalt) {
         this.passwordsalt = passwordsalt;
     }
-    
+
+    public List<Todo> getTodos() {
+        return todos;
+    }
+
+    public void setTodos(List<Todo> todos) {
+        this.todos = todos;
+    }
 }

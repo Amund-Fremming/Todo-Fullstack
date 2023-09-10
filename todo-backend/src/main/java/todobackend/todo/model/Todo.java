@@ -3,10 +3,12 @@ package todobackend.todo.model;
 public class Todo {
 
     private int todoid;
+    private int userid;
     private String todoheader;
     private String todoinfo;
 
-    public Todo(int todoid, String todoheader, String todoinfo) {
+    public Todo(int todoid, int userid, String todoheader, String todoinfo) {
+        this.userid = userid;
         this.todoid = todoid;
         this.todoheader = todoheader;
         this.todoinfo = todoinfo;
@@ -36,6 +38,14 @@ public class Todo {
 
     public void setTodoinfo(String info) {
         this.todoinfo = info;
+    }
+
+    public int getUserid() {
+        return this.userid;
+    }
+
+    public void setUserid(int id) {
+        this.userid = id;
     }
 
 }
