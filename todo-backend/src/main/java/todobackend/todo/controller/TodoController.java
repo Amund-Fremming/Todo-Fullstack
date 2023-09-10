@@ -44,7 +44,7 @@ public class TodoController {
         while (iterator.hasNext()) {
             Todo todo = iterator.next();
             if (todo != null && todo.getTodoid() == id) {
-                iterator.remove(); // Safely remove the matching todo
+                iterator.remove();
             }
         }
 
@@ -53,12 +53,11 @@ public class TodoController {
         return ResponseEntity.ok("TODO Updated successfully");
     }
 
-
     @ResponseBody
     @DeleteMapping("/delete-todo/{id}")
     public ResponseEntity<String> deleteTodoData(@PathVariable int id) {
         System.out.println(id);
-        // Add code
+        todos = new ArrayList<>(todos.stream().filter(todo -> todo.getTodoid() != id).toList());
         return ResponseEntity.ok("TODO Deleted successfully");
     }
 
