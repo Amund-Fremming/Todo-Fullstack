@@ -3,6 +3,7 @@ export interface User {
     username: string;
     password: string;
     passwordsalt: string;
+    todos: [];
 }
 
 export interface Todo {
