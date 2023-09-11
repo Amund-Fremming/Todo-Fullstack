@@ -1,18 +1,28 @@
 package todobackend.todo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+
 import java.util.List;
 
+@Entity
+@Table(name="todouser")
 public class User {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int userid;
     private String username;
     private String password;
     private String passwordsalt;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Todo> todos;
 
-    public User(int userid, String username, String password, String passwordsalt, List<Todo> todos) {
-        this.userid = userid;
+    public User() {}
+
+    public User(String username, String password, String passwordsalt, List<Todo> todos) {
         this.username = username;
         this.password = password;
         this.passwordsalt = passwordsalt;

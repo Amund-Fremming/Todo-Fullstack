@@ -1,8 +1,10 @@
 package todobackend.todo.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import todobackend.todo.model.Todo;
+import todobackend.todo.service.TodoService;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -18,46 +20,30 @@ import java.util.stream.Collectors;
 )
 public class TodoController {
 
-    private List<Todo> todos = new ArrayList<Todo>();
+    @Autowired
+    private TodoService todoService;
 
     @ResponseBody
     @GetMapping("/fetch-todos")
     public List<Todo> fetchTodoData() {
-        return todos;
+        return todoService.getAllTodos();
     }
 
     @ResponseBody
     @PostMapping("/push-todo")
     public ResponseEntity<String> pushTodoData(@RequestBody Todo todo) {
-        todos.add(todo);
         return ResponseEntity.ok("TODO added successfully");
     }
 
     @ResponseBody
     @PutMapping("/update-todo/{id}")
     public ResponseEntity<String> updateTodoData(@PathVariable int id, @RequestBody Todo updatedTodo) {
-        System.out.println(id);
-
-        // Create an iterator for safe removal
-        Iterator<Todo> iterator = todos.iterator();
-
-        while (iterator.hasNext()) {
-            Todo todo = iterator.next();
-            if (todo != null && todo.getTodoid() == id) {
-                iterator.remove();
-            }
-        }
-
-        todos.add(updatedTodo);
-
         return ResponseEntity.ok("TODO Updated successfully");
     }
 
     @ResponseBody
     @DeleteMapping("/delete-todo/{id}")
     public ResponseEntity<String> deleteTodoData(@PathVariable int id) {
-        System.out.println(id);
-        todos = new ArrayList<>(todos.stream().filter(todo -> todo.getTodoid() != id).toList());
         return ResponseEntity.ok("TODO Deleted successfully");
     }
 

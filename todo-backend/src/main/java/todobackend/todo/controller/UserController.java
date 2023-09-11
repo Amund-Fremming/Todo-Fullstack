@@ -1,10 +1,12 @@
 package todobackend.todo.controller;
 
 import org.apache.coyote.Response;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import todobackend.todo.model.User;
+import todobackend.todo.service.UserService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,11 +20,14 @@ import java.util.List;
 )
 public class UserController {
 
+    @Autowired
+    private UserService userService;
+
     @ResponseBody
-    @GetMapping("/get-all-users")
+    @GetMapping("/get-all")
     public List<User> getAllUsers() {
         // Get all users
-        return new ArrayList<User>();   // Modify return
+        return userService.getAllUsers();
     }
 
     @ResponseBody

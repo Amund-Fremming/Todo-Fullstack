@@ -1,20 +1,29 @@
 package todobackend.todo.model;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "todo")
 public class Todo {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int todoid;
-    private int userid;
     private String todoheader;
     private String todoinfo;
 
-    public Todo(int todoid, int userid, String todoheader, String todoinfo) {
-        this.userid = userid;
-        this.todoid = todoid;
+    @ManyToOne
+    @JoinColumn(name = "userid")
+    private User user;
+
+    public Todo() {
+
+    }
+
+    public Todo(String todoheader, String todoinfo) {
         this.todoheader = todoheader;
         this.todoinfo = todoinfo;
     }
-
-    public Todo() {}
 
     public int getTodoid() {
         return this.todoid;
@@ -40,12 +49,11 @@ public class Todo {
         this.todoinfo = info;
     }
 
-    public int getUserid() {
-        return this.userid;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserid(int id) {
-        this.userid = id;
+    public void setUser(User user) {
+        this.user = user;
     }
-
 }
