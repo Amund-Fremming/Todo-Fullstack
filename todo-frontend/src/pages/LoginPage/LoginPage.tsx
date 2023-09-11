@@ -23,8 +23,8 @@ export default function LoginPage({ userLoggedIn, setUserLoggedIn }: LoginPagePr
 
   return (
     <div className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-400 h-screen w-full flex justify-center">
-        <div className="shadow-2xl mt-20 w-[400px] h-[330px] bg-white rounded-xl flex flex-col items-center mx-4">
-          <h1 className="mt-12 text-4xl text-blue-500 font-serif font-semibold">Login</h1>
+        <div className="shadow-2xl mt-20 w-[400px] h-[360px] bg-white rounded-xl flex flex-col items-center mx-4">
+          <h1 className="mt-12 mb-6 text-4xl text-blue-500 font-serif font-semibold">Login</h1>
           <input
             onChange={e => setUsername(e.target.value)}
             type="text"
@@ -39,7 +39,7 @@ export default function LoginPage({ userLoggedIn, setUserLoggedIn }: LoginPagePr
           />
           <button
             onClick={handleLogin}
-            className="bg-blue-500 my-2 h-[50px] mt-4 w-[130px] rounded-xl justify-center text-center text-white font-serif text-xl border-b-[5px] border-blue-800"
+            className="bg-blue-500 my-2 h-[50px] mt-4 w-[130px] rounded-xl justify-center text-center text-white font-serif text-xl border-b-[5px] border-blue-800 hover:translate-y-[1px] hover:border-b-[0px] hover:bg-blue-800"
           >
             Login
           </button>

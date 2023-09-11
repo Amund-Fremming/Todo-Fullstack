@@ -29,17 +29,17 @@ export default function Navbar({ userLoggedIn }: NavbarProps) {
           <div className="md:hidden">
             <button
               onClick={toggleDropdown}
-              className="text-white text-xl font-semibold font-serif hover:text-purple-500"
+              className="text-white text-xl font-semibold font-serif hover:text-black"
             >
               Menu
             </button>
             {isDropdownOpen && (
               <div className="absolute top-14 right-0 mt-2 bg-blue-500 text-white text-xl shadow-md z-10 w-full flex flex-row-reverse pr-2 font-serif">
                 <div className="flex flex-col p-4 space-y-2">
-                  <Nav to="/" className="hover:underline underline-offset-2 hover:text-purple-500">Home</Nav>
-                  <Nav to="/login" className="hover:underline underline-offset-2 hover:text-purple-500">Login</Nav>
+                  <Nav to="/" className="hover:underline underline-offset-2 hover:text-black">Home</Nav>
+                  <Nav to="/login" className="hover:underline underline-offset-2 hover:text-black">Login</Nav>
                   {userLoggedIn && (
-                    <Nav to="/todo" className="hover:underline underline-offset-2 hover:text-purple-500">Todo</Nav>
+                    <Nav to="/todo" className="hover:underline underline-offset-2 hover:text-black">Todo</Nav>
                   )}
                 </div>
               </div>
@@ -47,10 +47,10 @@ export default function Navbar({ userLoggedIn }: NavbarProps) {
           </div>
 
           <div className="hidden md:flex space-x-10 text-white text-xl font-semibold font-serif">
-            <Nav to="/" className="hover:underline underline-offset-2 hover:text-purple-500">Home</Nav>
-            <Nav to="/login" className="hover:underline underline-offset-2 hover:text-purple-500">Login</Nav>
+            <Nav to="/" className="hover:underline underline-offset-2 hover:text-black">Home</Nav>
+            <Nav to="/login" className="hover:underline underline-offset-2 hover:text-black">Login</Nav>
             {userLoggedIn && (
-              <Nav to="/todo" className="hover:underline underline-offset-2 hover:text-purple-500">Todo</Nav>
+              <Nav to="/todo" className="hover:underline underline-offset-2 hover:text-black">Todo</Nav>
             )}
           </div>
         </div>
