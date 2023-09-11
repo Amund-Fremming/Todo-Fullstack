@@ -1,8 +1,11 @@
 # Use an official Node.js runtime as the base image
 FROM node:18.12.2
 
+## SJEKKE HER
 # Set the working directory inside the container
-WORKDIR /app
+# WORKDIR /src/app
+
+# ENV PORT=5173
 
 # Copy package.json and package-lock.json to the container
 COPY package*.json ./
