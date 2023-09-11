@@ -17,4 +17,17 @@ public class UserService {
         return userRepo.findAll();
     }
 
+    public User getUser(int userid) {
+        // TODO
+        return null;
+    }
+
+    public User createUser(User user) {
+        return userRepo.save(user);
+    }
+
+    public void deleteUser(int userid) {
+        userRepo.deleteById(userid);
+    }
+
 }

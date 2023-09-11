@@ -24,13 +24,13 @@ public class TodoController {
     private TodoService todoService;
 
     @ResponseBody
-    @GetMapping("/get-all")         // Denne må beskyttes
+    @GetMapping("/get-all")         
     public List<Todo> fetchTodoData() {
         return todoService.getAllTodos();
     }
 
     @ResponseBody
-    @GetMapping("/get/{userid)")         // Denne må beskyttes
+    @GetMapping("/get/{userid)")
     public List<Todo> fetchTodoData(@PathVariable int userid) {
         return todoService.getAllTodos();
     }

@@ -17,4 +17,22 @@ public class TodoService {
         return todoRepo.findAll();
     }
 
+    public Todo getTodo(int todoid) {
+        // TODO
+        return null;
+    }
+
+    public Todo createTodo(Todo todo) {     // Returnerer denne Todo object?
+        return todoRepo.save(todo);
+    }
+
+    public Todo updateTodo(int todoid, Todo updatedTodo) {
+        // TODO
+        return null;
+    }
+
+    public void deleteTodo(int todoid) {
+        todoRepo.deleteById(todoid);
+    }
+
 }

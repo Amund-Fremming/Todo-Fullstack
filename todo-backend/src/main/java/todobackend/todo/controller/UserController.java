@@ -24,17 +24,17 @@ public class UserController {
     private UserService userService;
 
     @ResponseBody
-    @GetMapping("/get-all")             // Denne må beskyttes
+    @GetMapping("/get-all")
     public List<User> getAllUsers() {
         // Get all users
         return userService.getAllUsers();
     }
 
     @ResponseBody
-    @GetMapping("/get/{userid}")             // Denne må beskyttes
+    @GetMapping("/get/{userid}")
     public List<User> getUser(@PathVariable Integer userid) {
-        // FIKS KODE HER
-        return new ArrayList<>();
+        // TODO
+        return null;
     }
 
     @ResponseBody
