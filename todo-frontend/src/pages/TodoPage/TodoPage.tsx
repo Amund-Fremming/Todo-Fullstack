@@ -28,6 +28,7 @@ export const TodoPage = () => {
         const apiEndpoint = "/api/push-todo";
         const todo: Todo = {
             todoid: Number(todoid),
+            userid: 0,
             todoheader: todoheader,
             todoinfo: todoinfo
         }
@@ -56,6 +57,7 @@ export const TodoPage = () => {
         const apiEndpoint = `/api/update-todo/${todoid}`;
         const todo: Todo = {
             todoid: Number(todoid),
+            userid: 0,
             todoheader: todoheader,
             todoinfo: todoinfo
         }

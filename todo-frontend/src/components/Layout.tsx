@@ -3,13 +3,14 @@ import Navbar from "./Navbar";
 import Footer from "./Footer";
 
 interface LayoutProps {
-    children: ReactNode;
+  children: ReactNode;
+  userLoggedIn: boolean;
 }
 
-export default function Layout({ children }: LayoutProps ) {
+export default function Layout({ children, userLoggedIn}: LayoutProps ) {
   return (
     <div>
-        <Navbar />
+        <Navbar userLoggedIn={userLoggedIn} />
         <main>{children}</main>
         <Footer />
     </div>

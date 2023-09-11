@@ -1,9 +1,19 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { NavLink as Nav } from "react-router-dom";
 
-export default function Navbar() {
+interface NavbarProps {
+  userLoggedIn: boolean;
+}
+
+export default function Navbar({ userLoggedIn }: NavbarProps) {
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  useEffect(() => {
+    // On initial load we see if a user is logged in then show the NavLinks if user logged in
+    // Theese routes will be protected routes for dobbel security
+    //
+  }, []);
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
@@ -28,7 +38,9 @@ export default function Navbar() {
                 <div className="flex flex-col p-4 space-y-2">
                   <Nav to="/" className="hover:underline underline-offset-2 hover:text-purple-500">Home</Nav>
                   <Nav to="/login" className="hover:underline underline-offset-2 hover:text-purple-500">Login</Nav>
-                  <Nav to="/todo" className="hover:underline underline-offset-2 hover:text-purple-500">Todo</Nav>
+                  {userLoggedIn && (
+                    <Nav to="/todo" className="hover:underline underline-offset-2 hover:text-purple-500">Todo</Nav>
+                  )}
                 </div>
               </div>
             )}
@@ -37,7 +49,9 @@ export default function Navbar() {
           <div className="hidden md:flex space-x-10 text-white text-xl font-semibold font-serif">
             <Nav to="/" className="hover:underline underline-offset-2 hover:text-purple-500">Home</Nav>
             <Nav to="/login" className="hover:underline underline-offset-2 hover:text-purple-500">Login</Nav>
-            <Nav to="/todo" className="hover:underline underline-offset-2 hover:text-purple-500">Todo</Nav>
+            {userLoggedIn && (
+              <Nav to="/todo" className="hover:underline underline-offset-2 hover:text-purple-500">Todo</Nav>
+            )}
           </div>
         </div>
       </div>
