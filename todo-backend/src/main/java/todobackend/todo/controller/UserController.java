@@ -26,7 +26,7 @@ public class UserController {
     }
 
     @ResponseBody
-    @PostMapping("/post-new-user")
+    @PostMapping("/create-new-user")
     public ResponseEntity<String> createNewUser(@RequestBody User user) {
         try {
             // Add the new user to the database
