@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/todo")
 @CrossOrigin(
         origins = {"http://localhost:5173","http://localhost:8080"},
         methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE},
@@ -24,26 +24,32 @@ public class TodoController {
     private TodoService todoService;
 
     @ResponseBody
-    @GetMapping("/fetch-todos")
+    @GetMapping("/get-all")         // Denne må beskyttes
     public List<Todo> fetchTodoData() {
         return todoService.getAllTodos();
     }
 
     @ResponseBody
-    @PostMapping("/push-todo")
-    public ResponseEntity<String> pushTodoData(@RequestBody Todo todo) {
+    @GetMapping("/get/{userid)")         // Denne må beskyttes
+    public List<Todo> fetchTodoData(@PathVariable int userid) {
+        return todoService.getAllTodos();
+    }
+
+    @ResponseBody
+    @PostMapping("/create/{userid}")
+    public ResponseEntity<String> pushTodoData(@RequestBody Todo todo, @PathVariable int userid) {
         return ResponseEntity.ok("TODO added successfully");
     }
 
     @ResponseBody
-    @PutMapping("/update-todo/{id}")
-    public ResponseEntity<String> updateTodoData(@PathVariable int id, @RequestBody Todo updatedTodo) {
+    @PutMapping("/update/{todoid}")
+    public ResponseEntity<String> updateTodoData(@PathVariable int todoid, @RequestBody Todo updatedTodo) {
         return ResponseEntity.ok("TODO Updated successfully");
     }
 
     @ResponseBody
-    @DeleteMapping("/delete-todo/{id}")
-    public ResponseEntity<String> deleteTodoData(@PathVariable int id) {
+    @DeleteMapping("/delete/{todoid}")
+    public ResponseEntity<String> deleteTodoData(@PathVariable int todoid) {
         return ResponseEntity.ok("TODO Deleted successfully");
     }
 

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/api/user")
 @CrossOrigin(
         origins = {"http://localhost:5173","http://localhost:8080"},
         methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE},
@@ -24,14 +24,21 @@ public class UserController {
     private UserService userService;
 
     @ResponseBody
-    @GetMapping("/get-all")
+    @GetMapping("/get-all")             // Denne må beskyttes
     public List<User> getAllUsers() {
         // Get all users
         return userService.getAllUsers();
     }
 
     @ResponseBody
-    @PostMapping("/create-new-user")
+    @GetMapping("/get/{userid}")             // Denne må beskyttes
+    public List<User> getUser(@PathVariable Integer userid) {
+        // FIKS KODE HER
+        return new ArrayList<>();
+    }
+
+    @ResponseBody
+    @PostMapping("/create")
     public ResponseEntity<String> createNewUser(@RequestBody User user) {
         try {
             // Add the new user to the database
@@ -42,7 +49,7 @@ public class UserController {
     }
 
     @ResponseBody
-    @DeleteMapping("/delete-user/{userid}")
+    @DeleteMapping("/delete/{userid}")
     public ResponseEntity<String> deleteUser(@PathVariable int userid) {
         try {
             // Find and delete user from db
@@ -51,5 +58,4 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to delete the user.");
         }
     }
-
 }
