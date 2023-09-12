@@ -30,6 +30,7 @@ public class UserService {
     }
 
     public User getUser(String username) {
+
         return userRepo.findUserByUsername(username);
     }
 }

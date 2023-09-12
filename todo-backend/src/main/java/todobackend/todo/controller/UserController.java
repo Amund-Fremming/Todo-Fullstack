@@ -7,8 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import todobackend.todo.model.User;
 import todobackend.todo.service.UserService;
+import todobackend.todo.util.PasswordHashAndSalt;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -22,6 +22,33 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @ResponseBody
+    @PostMapping("/login")
+    public ResponseEntity<User> loginUser(@RequestBody User user) {
+        try {
+            User validateUser = userService.getUser(user.getUsername());
+            if(validateUser == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(user);
+            }
+
+            String validateUserSalt = validateUser.getPasswordsalt();
+            String validateUserHash = validateUser.getPassword();
+            boolean valid = PasswordHashAndSalt.validerMedSalt(user.getPassword(), validateUserSalt, validateUserHash);
+            if(!valid) {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body(user);
+            }
+
+            String jwtToken = generateJwtToken(validateUser);
+            return ResponseEntity.ok(validateUser);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
+    public String generateJwtToken(User user) {
+        return "";
+    }
 
     @ResponseBody
     @GetMapping("/get-all")
@@ -57,8 +84,11 @@ public class UserController {
                 return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
             }
 
-            // Her må det oppettes salt og saltet password før bruker lagres
-            user.setPasswordsalt("SALTY");
+            String salt = PasswordHashAndSalt.genererTilfeldigSalt();
+            String passwordHash = PasswordHashAndSalt.hashMedSalt(user.getPassword(), salt);
+
+            user.setPasswordsalt(salt);
+            user.setPassword(passwordHash);
             userService.createUser(user);
             return ResponseEntity.ok(user);
         } catch (Exception e) {
