@@ -17,8 +17,8 @@ export const App = () => {
                 <Routes>
                     <Route path="/" element={<HomePage/>} />
                     <Route path="/todo" element={<TodoPage/>} />
-                    <Route path="/signup" element={<SignupPage userLoggedIn={userLoggedIn} setUserLoggedIn={setUserLoggedIn} />} />
-                    <Route path="/login" element={<LoginPage userLoggedIn={userLoggedIn} setUserLoggedIn={setUserLoggedIn} />} />
+                    <Route path="/signup" element={<SignupPage setUserLoggedIn={setUserLoggedIn} />} />
+                    <Route path="/login" element={<LoginPage setUserLoggedIn={setUserLoggedIn} />} />
                 </Routes>
             </Layout>
         </Router>
