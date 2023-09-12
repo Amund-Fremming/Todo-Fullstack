@@ -25,37 +25,59 @@ public class UserController {
 
     @ResponseBody
     @GetMapping("/get-all")
-    public List<User> getAllUsers() {
-        // Get all users
-        return userService.getAllUsers();
+    public ResponseEntity<List<User>> getAllUsers() {
+       try {
+           return ResponseEntity.ok(userService.getAllUsers());
+       } catch (Exception e) {
+           return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+       }
     }
 
     @ResponseBody
     @GetMapping("/get/{userid}")
-    public List<User> getUser(@PathVariable Integer userid) {
-        // TODO
-        return null;
+    public ResponseEntity<User> getUser(@PathVariable Integer userid) {
+        try {
+            User user = userService.getUser(userid);
+            if(user != null) {
+                return ResponseEntity.ok(user);
+            }
+
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
     }
 
     @ResponseBody
     @PostMapping("/create")
-    public ResponseEntity<String> createNewUser(@RequestBody User user) {
+    public ResponseEntity<User> createNewUser(@RequestBody User user) {
         try {
-            // Add the new user to the database
-            return ResponseEntity.ok("New user added!");
+            User userFromDB = userService.getUser(user.getUsername());
+            if(userFromDB != null) {
+                return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
+            }
+
+            // Her må det oppettes salt og saltet password før bruker lagres
+            user.setPasswordsalt("SALTY");
+            userService.createUser(user);
+            return ResponseEntity.ok(user);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to add the user.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(user);
         }
     }
 
     @ResponseBody
     @DeleteMapping("/delete/{userid}")
-    public ResponseEntity<String> deleteUser(@PathVariable int userid) {
+    public ResponseEntity<User> deleteUser(@PathVariable int userid) {
         try {
-            // Find and delete user from db
-            return ResponseEntity.ok("User deleted.");
+            User userFromDB = userService.getUser(userid);
+            if(userFromDB == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            }
+            userService.deleteUser(userid);
+            return ResponseEntity.ok(userFromDB);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to delete the user.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
 }

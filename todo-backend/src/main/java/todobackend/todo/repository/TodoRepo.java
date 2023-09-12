@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface TodoRepo extends JpaRepository<Todo, Integer> {
     List<Todo> findAll();
+    Todo findByTodoid(int todoid);
 }

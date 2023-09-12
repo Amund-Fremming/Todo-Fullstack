@@ -18,8 +18,7 @@ public class UserService {
     }
 
     public User getUser(int userid) {
-        // TODO
-        return null;
+        return userRepo.findUserByUserid(userid);
     }
 
     public User createUser(User user) {
@@ -30,4 +29,7 @@ public class UserService {
         userRepo.deleteById(userid);
     }
 
+    public User getUser(String username) {
+        return userRepo.findUserByUsername(username);
+    }
 }
