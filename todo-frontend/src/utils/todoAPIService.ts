@@ -1,3 +1,4 @@
+import { BASE_PATH } from "openai/dist/base";
 import { User } from "../types/types";
 
 const URL_BASE = "http://localhost:8080/api/user";
@@ -48,7 +49,7 @@ export const getUser = async (userid: number) => {
 /**
  * @param username 
  * @param password 
- * @returns 
+ * @returns USERNAME_EXISTS if username is present, null if server error or user object if created.
  */
 export const createUser = async (username: string, password: string) => {
     try {
@@ -65,7 +66,7 @@ export const createUser = async (username: string, password: string) => {
         });
 
         if(response.ok) {
-            return await response.text();
+            return await response.json();
         }
 
         if(response.status === 409) {
@@ -81,11 +82,32 @@ export const createUser = async (username: string, password: string) => {
     }
 }
 
+/**
+ * @param userid 
+ * @returns Deleted user, null if user not in db, NOT_FOUND if user not in db
+ */
 export const deleteUser = async (userid: number) => {
     try {
+        const response = await fetch(URL_BASE + `/delete/${userid}`, {
+            method: "DELETE",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(userid)
+        })
 
+        if(response.ok) {
+            return await response.json();
+        }
+
+        if(response.status === 404) {
+            console.log("Username exists");
+            return "NOT_FOUND";
+        }
+
+        console.log("Internal server error (DELETEUSER)");
+        return null;
     } catch (err) {
-        console.error("");
+        console.error("Error in deleteUser (USER API)");
+        return null;
     }
 }
 

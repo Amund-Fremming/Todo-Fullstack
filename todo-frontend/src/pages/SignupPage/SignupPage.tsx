@@ -3,9 +3,9 @@ import { NavLink as Nav } from "react-router-dom";
 import { createUser } from "../../utils/todoAPIService";
 
 interface LoginPageProps {
-    userLoggedIn: boolean;
-    setUserLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
-  }
+  userLoggedIn: boolean;
+  setUserLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
 export default function SignupPage({ userLoggedIn, setUserLoggedIn }: LoginPageProps) {
     const [username, setUsername] = useState<string>("");
@@ -13,7 +13,12 @@ export default function SignupPage({ userLoggedIn, setUserLoggedIn }: LoginPageP
     const [serverResponse, setServerResponse] = useState<string>("");
 
     const handleSignUp = async () => {
+      if(username.length < 4 || password.length < 4) {
+        setServerResponse("Password or username too short");
+      }
+
       const response = await createUser(username, password)
+      
       if(response === "USERNAME_EXISTS") {
         setServerResponse("Username exists!");
       } else if(response !== null) {
