@@ -8,7 +8,8 @@ import SignupPage from "./pages/SignupPage/SignupPage";
 
 export const App = () => {
 
-    const [userLoggedIn, setUserLoggedIn] = useState<boolean>(true);
+    // Needs to check session for user, not just this
+    const [userLoggedIn, setUserLoggedIn] = useState<boolean>(false);
 
     return(
         <Router>

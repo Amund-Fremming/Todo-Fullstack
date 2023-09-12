@@ -3,11 +3,10 @@ import { NavLink as Nav } from "react-router-dom";
 import { createUser } from "../../utils/userAPIService";
 
 interface LoginPageProps {
-  userLoggedIn: boolean;
   setUserLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function SignupPage({ userLoggedIn, setUserLoggedIn }: LoginPageProps) {
+export default function SignupPage({ setUserLoggedIn }: LoginPageProps) {
     const [username, setUsername] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [serverResponse, setServerResponse] = useState<string>("");

@@ -1,11 +1,4 @@
-import { deleteTodo } from "../../utils/todoAPIService";
-
 export default function HomePage() {
-
-    const handleHandle = async () => {
-        const user = await deleteTodo(13);
-        console.log(user);
-    }
 
     return (
         <div className="bg-gradient-to-r px-2 from-indigo-500 via-purple-500 to-pink-400 h-screen flex justify-center w-full">
@@ -13,8 +6,6 @@ export default function HomePage() {
                 <h1 className="text-white font-serif text-6xl mt-32 ">Todo manager</h1>
                 <h2 className="text-white font-serif text-2xl mt-3">Login to start making todos</h2>
             </div>
-
-            <button onClick={handleHandle}>hey</button>
         </div>
     )
 }

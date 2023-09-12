@@ -2,6 +2,32 @@ import { User } from "../types/types";
 
 const URL_BASE = "http://localhost:8080/api/user";
 
+export const loginUser = async (username: string, password: string) => {
+    try {
+
+        const user: User = {
+            userid: 0,
+            username: username,
+            password: password
+        }
+
+        const response = await fetch(URL_BASE + "/login", {
+            method: "POST",
+            headers: {"Content-Type":"application/json"},
+            body: JSON.stringify(user)
+        });
+
+        if(response.ok) {
+            return await response.json();
+        }
+
+        return "FORBIDDEN"
+    } catch (err) {
+        console.error("Error in loginUser (USER API)");
+        return "SERVER_ERROR";
+    }
+}
+
 /**
  * @returns all users in db
  */
