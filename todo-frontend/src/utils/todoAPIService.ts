@@ -85,36 +85,63 @@ export const createTodo = async (userid: number, todoheader: string, todoinfo: s
     }
 }
 
-export const updateTodo = async (todoid: number) => {
+/**
+ * @param todoid 
+ * @param todoheader 
+ * @param todoinfo 
+ * @returns updated todo, NOT_FOUND or SERVER_ERROR
+ */
+export const updateTodo = async (todoid: number, todoheader: string, todoinfo: string) => {
     try {
-        const response = await fetch(URL_BASE + `/____`, {
-            method: "___",
-            headers: {"Content-Type": "application/json"},
 
+        const updatedTodo: Todo = {
+            todoid: 0,
+            userid: 0,
+            todoheader: todoheader,
+            todoinfo: todoinfo
+        }
+
+        const response = await fetch(URL_BASE + `/update/${todoid}`, {
+            method: "PUT",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(updatedTodo)
         });
 
         if(response.ok) {
             return await response.json();
         }
+
+        if(response.status === 404) {
+            return "NOT_FOUND";
+        }
         
     } catch(err) {
-        console.error("Error in ____ (TODO API)");
+        console.error("Error in updateTodo (TODO API)");
+        return "SERVER_ERROR";
     }
 }
 
+/**
+ * @param todoid 
+ * @returns deleted todo, NOT_FOUND or SERVER_ERROR
+ */
 export const deleteTodo = async (todoid: number) => {
     try {
-        const response = await fetch(URL_BASE + `/____`, {
-            method: "___",
+        const response = await fetch(URL_BASE + `/delete/${todoid}`, {
+            method: "DELETE",
             headers: {"Content-Type": "application/json"},
-
         });
 
         if(response.ok) {
             return await response.json();
         }
+
+        if(response.status === 404) {
+            return "NOT FOUND";
+        }
         
     } catch(err) {
-        console.error("Error in ____ (TODO API)");
+        console.error("Error in deleteTodo (TODO API)");
+        return "SERVER_ERROR";
     }
 }

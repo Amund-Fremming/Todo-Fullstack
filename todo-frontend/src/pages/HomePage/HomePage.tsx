@@ -1,9 +1,9 @@
-import { createTodo } from "../../utils/todoAPIService";
+import { deleteTodo } from "../../utils/todoAPIService";
 
 export default function HomePage() {
 
     const handleHandle = async () => {
-        const user = await getTodo(2);
+        const user = await deleteTodo(13);
         console.log(user);
     }
 

@@ -17,9 +17,10 @@ export const getAllUsers = async () => {
             return await response.json();
         }
         
-        return response.status;
+        return response.status
     } catch (err) {
         console.error("Error in getAllUsers (USER API)");
+        return "SERVER_ERROR";
     }
 }
 
