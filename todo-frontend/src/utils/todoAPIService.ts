@@ -1,34 +1,34 @@
-import { BASE_PATH } from "openai/dist/base";
-import { User } from "../types/types";
+import { Todo } from "../types/types";
 
-const URL_BASE = "http://localhost:8080/api/user";
+const URL_BASE = "http://localhost:8080/api/todo";
 
 /**
- * @returns all users in db
+ * @returns all todos, or SERVER_ERROR
  */
-export const getAllUsers = async () => {
+export const getAllTodos = async () => {
     try {
-        const response = await fetch(URL_BASE + "/get-all", {
+        const response = await fetch(URL_BASE + `/get-all`, {
             method: "GET",
-            headers: {"Content-Type": "application/json"}
+            headers: {"Content-Type": "application/json"},
         });
 
         if(response.ok) {
-            console.log("All users retieved!");
             return await response.json();
         }
-        
-        console.error("Internal server error (GETALL) " + response.status);
-    } catch (err) {
-        console.error("Error in getAllUsers (USER API)");
+
+        // Mulig legge til mer spesifikke returns ut ifra hva responsen sier
+        return response.status; 
+    } catch(err) {
+        console.error("Error in getAllTodos (TODO API)");
+        return "SERVER_ERROR";
     }
 }
 
 /**
  * @param userid 
- * @returns user if in db, if else null
+ * @returns Todo, NOT_FOUND or SERVER_ERROR
  */
-export const getUser = async (userid: number) => {
+export const getTodo = async (userid: number) => {
     try {
         const response = await fetch(URL_BASE + `/get/${userid}`, {
             method: "GET",
@@ -39,75 +39,82 @@ export const getUser = async (userid: number) => {
             return await response.json();
         }
 
-        console.error("Internal server error (GETUSER) " + response.status);
-        return null;
-    } catch (err) {
-        console.error("Error in getUser (USER API)");
+        if(response.status === 404) {
+            return "NOT_FOUND";
+        }
+        
+    } catch(err) {
+        console.error("Error in getTodo (TODO API)");
+        return "SERVER_ERROR";
     }
 }
 
 /**
- * @param username 
- * @param password 
- * @returns USERNAME_EXISTS if username is present, null if server error or user object if created.
+ * @param userid 
+ * @param todoheader 
+ * @param todoinfo 
+ * @returns a new Todo, NOT_FOUND or SERVER_ERROR
  */
-export const createUser = async (username: string, password: string) => {
+export const createTodo = async (userid: number, todoheader: string, todoinfo: string) => {
     try {
-        const user: User = {
+
+        const todo: Todo = {
+            todoid: 0,
             userid: 0,
-            username: username,
-            password: password
+            todoheader: todoheader,
+            todoinfo: todoinfo
         }
 
-        const response = await fetch(URL_BASE + "/create", {
+        const response = await fetch(URL_BASE + `/create/${userid}`, {
             method: "POST",
             headers: {"Content-Type": "application/json"},
-            body: JSON.stringify(user)
+            body: JSON.stringify(todo)
         });
 
         if(response.ok) {
             return await response.json();
         }
 
-        if(response.status === 409) {
-            console.log("Username exists");
-            return "USERNAME_EXISTS";
+        if(response.status === 404) {
+            return "NOT_FOUND";
         }
         
-        console.error("Internal server error (CREATEUSER)");
-        return null;
     } catch(err) {
-        console.error("Error in createUser (USER API)");
-        return null;
+        console.error("Error in createTodo (TODO API)");
+        return "SERVER_ERROR";
     }
 }
 
-/**
- * @param userid 
- * @returns Deleted user, null if user not in db, NOT_FOUND if user not in db
- */
-export const deleteUser = async (userid: number) => {
+export const updateTodo = async (todoid: number) => {
     try {
-        const response = await fetch(URL_BASE + `/delete/${userid}`, {
-            method: "DELETE",
+        const response = await fetch(URL_BASE + `/____`, {
+            method: "___",
             headers: {"Content-Type": "application/json"},
-            body: JSON.stringify(userid)
-        })
+
+        });
 
         if(response.ok) {
             return await response.json();
         }
-
-        if(response.status === 404) {
-            console.log("Username exists");
-            return "NOT_FOUND";
-        }
-
-        console.log("Internal server error (DELETEUSER)");
-        return null;
-    } catch (err) {
-        console.error("Error in deleteUser (USER API)");
-        return null;
+        
+    } catch(err) {
+        console.error("Error in ____ (TODO API)");
     }
 }
 
+export const deleteTodo = async (todoid: number) => {
+    try {
+        const response = await fetch(URL_BASE + `/____`, {
+            method: "___",
+            headers: {"Content-Type": "application/json"},
+
+        });
+
+        if(response.ok) {
+            return await response.json();
+        }
+        
+    } catch(err) {
+        console.error("Error in ____ (TODO API)");
+    }
+}

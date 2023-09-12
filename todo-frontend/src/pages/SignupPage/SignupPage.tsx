@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { NavLink as Nav } from "react-router-dom";
-import { createUser } from "../../utils/todoAPIService";
+import { createUser } from "../../utils/userAPIService";
 
 interface LoginPageProps {
   userLoggedIn: boolean;
@@ -15,10 +15,11 @@ export default function SignupPage({ userLoggedIn, setUserLoggedIn }: LoginPageP
     const handleSignUp = async () => {
       if(username.length < 4 || password.length < 4) {
         setServerResponse("Password or username too short");
+        return;
       }
 
       const response = await createUser(username, password)
-      
+
       if(response === "USERNAME_EXISTS") {
         setServerResponse("Username exists!");
       } else if(response !== null) {

@@ -6,7 +6,7 @@ export interface User {
 
 export interface Todo {
     todoid: number;
-    userid: number
+    userid: number;
     todoheader: string;
     todoinfo: string;
 }
