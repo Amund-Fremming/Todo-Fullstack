@@ -38,16 +38,10 @@ public class UserController {
             if(!valid) {
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).body(user);
             }
-
-            String jwtToken = generateJwtToken(validateUser);
             return ResponseEntity.ok(validateUser);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
-    }
-
-    public String generateJwtToken(User user) {
-        return "";
     }
 
     @ResponseBody
