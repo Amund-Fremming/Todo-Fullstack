@@ -1,3 +1,5 @@
-# Todo-Fullstack
+# Not Finished
+
+## Todo-Fullstack
 - Trying to setup a fullstack project
 - Test project for a bigger project to come
